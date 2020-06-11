@@ -8,7 +8,14 @@ const routes = [
   {
     path: "/",
     name: "Index",
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: "/user",
+        name: "User",
+        component: () => import("../views/user/index")
+      }
+    ]
   }
 ];
 
