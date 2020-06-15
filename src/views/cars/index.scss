@@ -14,14 +14,10 @@
     border-radius: 24px;
     @include webkit(box-shadow, 0 0 18px 0 rgba(0, 0, 0, .2));
     @include webkit(box-sizing, border-box);
-    header {
-        display: flex;
-        h4, p {
-            flex: 1;
-        }
-    }
+    header { @extend %clearfix; }
 }
 .cars-logo {
+    float: left;
     img {
         display: inline-block;
         height: 34px;
@@ -31,7 +27,7 @@
     .name { font-size: 16px; }
 }
 .cars-attr {
-    text-align: right;
+    float: right;
     line-height: 34px;
     opacity: .5;
 }
