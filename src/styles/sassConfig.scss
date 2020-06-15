@@ -14,10 +14,19 @@ $color-main: #34393f;
     *height: 1%;
 }
 
+/* 属性前端 */
 @mixin webkit($type, $value) {
     -webkit-#{$type}: $value;
     -moz-#{$type}: $value;
     -ms-#{$type}: $value;
     -o-#{$type}: $value;
+    #{$type}: $value;
+}
+
+@mixin webkitA($type, $value) {  // A => after
+    #{$type}: -webkit-#{$value};
+    #{$type}: -moz-#{$value};
+    #{$type}: -ms-#{$value};
+    #{$type}: -o-#{$value};
     #{$type}: $value;
 }
