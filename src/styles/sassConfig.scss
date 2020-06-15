@@ -1,0 +1,9 @@
+$color-main: #34393f;
+
+@mixin webkit($type, $value) {
+    -webkit-#{$type}: $value;
+    -moz-#{$type}: $value;
+    -ms-#{$type}: $value;
+    -o-#{$type}: $value;
+    #{$type}: $value;
+}

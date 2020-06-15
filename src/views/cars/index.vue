@@ -1,5 +1,16 @@
 <template>
     <div class="index-wrap">
+        <section class="cars-item">
+            <header>
+                <h4 class="cars-logo">
+                    <img src="../../assets/images/cars-logo.png" alt="Mustang 2019款">
+                    <span class="name">Mustang 2019款</span>
+                </h4>
+                <p class="cars-attr">新能源汽车  5座</p>
+            </header>
+            <div class="cars-content"></div>
+            <footer></footer>
+        </section>
         <span @click="user">汽车列表</span>
     </div>
 </template>
@@ -19,11 +30,5 @@ export default {
 }
 </script>
 <style lang="scss">
-.index-wrap {
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    z-index: 100;
-}
+@import "./index.scss";
 </style>

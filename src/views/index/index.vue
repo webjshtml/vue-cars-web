@@ -4,31 +4,31 @@
         <Cars />
         <!-- 地图 -->
         <Map />
+        <!-- 导航 -->
+        <Navbar />
         <!-- 会员 -->
-        <div id="children-view" :class="[show ? 'open' : '']">
+        <div id="children-view" :class="{open: show}">
             <router-view />
         </div>
     </div>
 </template>
 <script>
-import Map from "../amap/index";
-import Cars from "../cars/index";
+import Map from "../amap";
+import Cars from "../cars";
+import Navbar from "@c/navbar";
 export default {
     name: "Index",
-    components: { Map, Cars },
+    components: { Map, Cars, Navbar },
     data(){
-        return {
-            show: false
+        return {}
+    },
+    computed: {
+        show(){
+            const rotuer = this.$route;
+            return rotuer.name === "Index" ? false : true;
         }
     },
-    watch: {
-        "$route" :{
-            handler(newValue){
-                const routerName = newValue.name;
-                this.show = routerName === "Index" ? false : true;
-            }
-        }
-    }
+    watch: {}
 }
 </script>
 <style lang="scss">
