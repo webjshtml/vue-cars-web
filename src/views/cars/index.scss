@@ -1,106 +1,56 @@
-.index-wrap {
+.cars-wrap {
     position: fixed;
     left: 0;
     bottom: 94px;
     right: 0;
     z-index: 11;
 }
-.cars-item {
-    width: 505px;
-    height: 257px;
-    margin: auto;
-    padding: 30px 30px 0;
-    background-color: #fff;
-    border-radius: 24px;
-    @include webkit(box-shadow, 0 0 18px 0 rgba(0, 0, 0, .2));
-    @include webkit(box-sizing, border-box);
-    header { @extend %clearfix; }
-}
-.cars-logo {
-    float: left;
-    img {
-        display: inline-block;
-        height: 34px;
-        margin-right: 10px;
-        vertical-align: middle;
-    }
-    .name { font-size: 16px; }
-}
-.cars-attr {
-    float: right;
-    line-height: 34px;
-    opacity: .5;
-}
-.cars-content {
+.cars-swiper-wrap {
     position: relative;
-    margin: 11px 0 7px;
-    @extend %clearfix;
-    img {
-        float: right;
-        height: 120px;
-    }
-    .info {
-        display: flex;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        align-items: center;
-    }
-    .cars-number {
-        font-size: 18px;
-    }
-    .cars-electric {
-        padding-top: 10px;
-        display: inline-block;
-        li {
-            display: inline-block;
-            width: 7px;
-            height: 24px;
-            margin-right: 3px;
-            background-color: #e1e1e1;
-            border-radius: 100px;
-        }
-        @for $i from 1 through 10 {
-            &.active-li-#{$i}{
-                li:nth-child(-n+#{$i}) { @include webkitA(background, linear-gradient(#17a8fa, #108dd9)); }
-            }
-        }
-    }
-    .distance {
-        margin-left: 5px;
-        display: inline-block;
-        strong {
-            margin: 0 3px;
-            font-size: 22px;
-        }
-        sub {
-            position: relative;
-            top: -2px;
-        }
-        sub:first-of-type {
-            opacity: .6;
-        }
-    }
-}
-.parking-link {
-    position: relative;
-    display: block;
-    border-top: 1px solid #e1e1e1;
-    color: $color-main;
-    opacity: .8;
-    line-height: 53px;
-    &:after {
-        content: "";
-        position: absolute;
-        right: 0;
+    padding: 0 155px;
+    .swiper-button-prev,
+    .swiper-button-next {
         top: 50%;
-        width: 8px;
-        height: 8px;
-        margin-top: -8px;
-        border-top: 1px solid #d6d7d9;
-        border-right: 1px solid #d6d7d9;
-        @include webkit(transform, rotate(45deg));
+        width: 60px;
+        height: 100px;
+        margin-top: -50px;
+        border-radius: 100px;
+        background-color: #fff;
+        outline: none;
+        @include webkit(box-shadow, 0 0 18px 0 rgba(0, 0, 0, .2));
+        @include webkit(transition, all .3s ease 0s);
+        &.swiper-button-disabled { opacity: 1; }
+        &:hover { 
+            background-color: $color-main;
+            &:after { border-top: 3px solid $color-blur; }
+        }
+        &:after {
+            content: "";
+            width: 14px;
+            height: 14px;
+            border-top: 3px solid #000;
+        }
+    }
+    .swiper-button-prev { 
+        left: 53px;
+        &:after {
+            border-left: 3px solid #000;
+            margin-left: 5px;
+            @include webkit(transform, rotate(-45deg));
+        }
+        &:hover {
+            &:after { border-left: 3px solid $color-blur; }
+        }
+    }
+    .swiper-button-next { 
+        right: 53px;
+        &:after {
+            border-right: 3px solid #000;
+            margin-right: 5px;
+            @include webkit(transform, rotate(45deg));
+        }
+        &:hover {
+            &:after { border-right: 3px solid $color-blur; }
+        }
     }
 }
