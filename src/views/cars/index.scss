@@ -8,6 +8,7 @@
 .cars-swiper-wrap {
     position: relative;
     padding: 0 155px;
+    .swiper-container { overflow: initial; }
     .swiper-button-prev,
     .swiper-button-next {
         top: 50%;

@@ -1,14 +1,41 @@
 @import "./sassConfig.scss";
 @import "./normalize.scss";
-i[class^=icon] { // 获取类名开头为 icon 的i标签
-    display: inline-block;
-    width: 44px;
-    height: 44px;
+@import "./icon.scss";
+
+/* color */
+.color-main { color: $color-main; }
+
+/* text-algin */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* float */
+.pull-right { float: right; }
+.pull-left { float: left; }
+
+/* font-size */
+.fs-24 { font-size: 24px; }
+
+/* position */
+.p-r { position: relative; }
+.p-a { position: absolute; }
+
+/* clearfix */
+.clearfix { @extend %clearfix; }
+
+
+/* common ui */
+.select-car-btn {
+    display: block;
+    width: 240px;
+    height: 84px;
+    margin: 0 17px;
     border-radius: 100px;
+    line-height: 84px;
+    text-align: center;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 300;
     background-color: $color-main;
-    background-repeat: no-repeat;
 }
-.icon-help { background-image: url(~@/assets/images/icon/icon-help.png); }
-.icon-search { background-image: url(~@/assets/images/icon/icon-search.png); }
-.icon-location { background-image: url(~@/assets/images/icon/icon-location.png); }
-.icon-user { background-image: url(~@/assets/images/icon/icon-user.png); }

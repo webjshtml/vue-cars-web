@@ -1,5 +1,4 @@
 .cars-item {
-    width: 505px;
     height: 257px;
     margin: auto;
     padding: 30px 30px 0;
@@ -61,20 +60,20 @@
             }
         }
     }
-    .distance {
-        margin-left: 5px;
-        display: inline-block;
-        strong {
-            margin: 0 3px;
-            font-size: 22px;
-        }
-        sub {
-            position: relative;
-            top: -2px;
-        }
-        sub:first-of-type {
-            opacity: .6;
-        }
+}
+.distance {
+    margin-left: 5px;
+    display: inline-block;
+    strong {
+        margin: 0 3px;
+        font-size: 22px;
+    }
+    sub {
+        position: relative;
+        top: -2px;
+    }
+    sub:first-of-type {
+        opacity: .6;
     }
 }
 .parking-link {
@@ -95,5 +94,119 @@
         border-top: 1px solid #d6d7d9;
         border-right: 1px solid #d6d7d9;
         @include webkit(transform, rotate(45deg));
+    }
+}
+.cars-detailed {
+    // display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 0;
+    .scroll { 
+        height: 100%;
+        overflow-y: auto;
+    }
+    .column {
+        position: relative;
+        padding: 26px 0 20px;
+        margin-bottom: 19px;
+        font-size: 20px;
+        color: #34393f;
+        border-bottom: 1px solid #e1e1e1;
+        .close {
+            position: absolute;
+            right: 0;
+            top: 25px;
+            display: block;
+            width: 26px;
+            height: 26px;
+            cursor: pointer;
+            &:before, &:after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                height: 20px;
+                margin-left: -1px;
+                margin-top: -10px;
+                border-left: 2px solid #999c9f;
+            }
+            &:before { @include webkit(transform, rotate(45deg)); }
+            &:after { @include webkit(transform, rotate(-45deg)); }
+        }
+    }
+    .cars-electric-box {
+        padding: 15px;
+        margin-top: 17px;
+        border-radius: 100px;
+        background-color: #fff;
+        @include webkit(box-shadow, 0 0 10px 0 rgba(0, 0, 0, .1));
+        .e-bg {
+            display: block;
+            height: 8px;
+            background-color: #e1e1e1;
+            border-radius: 100px;
+        }
+        .e-high {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #0f9cee;
+            height: 100%;
+            border-radius: 100px;
+        }
+    }
+    .info {
+        margin: 32px 0 28px;
+    }
+    .select-car-btn {
+        position: absolute;
+        left: 50%;
+        margin-left: -120px;
+        bottom: -42px;
+    }
+}
+.cars-type-list {
+    li {
+        height: 43px;
+        padding: 0 17px 0 20px;
+        margin-bottom: 15px;
+        background-color: #f3f3f3;
+        border-color: #f3f3f3;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        font-size: 16px;
+        line-height: 43px;
+        &.current {
+            border-color: #0f9cee;
+        }
+    }
+    
+    .name { float: left; }
+    .price { float: right; }
+}
+.clause-dec {
+    @extend %clearfix;
+    i {
+        float: right;
+        width: 20px;
+        height: 20px;
+        border-radius: 100px;
+        background-color: #cccccc;
+        &.current {
+            background-color: $color-main;
+        }
+        &:before {
+            content: "";
+            display: block;
+            width: 8px;
+            height: 4px;
+            margin: 6px 0 0 5px;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            @include webkit(transform, rotate(-45deg));
+        }
     }
 }
