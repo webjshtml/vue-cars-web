@@ -1,12 +1,18 @@
 i[class^=icon] { // 获取类名开头为 icon 的i标签
     display: inline-block;
-    width: 44px;
-    height: 44px;
     border-radius: 100px;
     background-color: $color-main;
     background-repeat: no-repeat;
 }
+.icon-w-44 { width: 44px; height: 44px; }
 .icon-help { background-image: url(~@/assets/images/icon/icon-help.png); }
 .icon-search { background-image: url(~@/assets/images/icon/icon-search.png); }
 .icon-location { background-image: url(~@/assets/images/icon/icon-location.png); }
 .icon-user { background-image: url(~@/assets/images/icon/icon-user.png); }
+
+
+.icon-user-link-1 { background-image: url(~@/assets/images/icon/icon-router-link-001.png); }
+.icon-user-link-2 { background-image: url(~@/assets/images/icon/icon-router-link-002.png); }
+.icon-user-link-3 { background-image: url(~@/assets/images/icon/icon-router-link-003.png); }
+.icon-user-link-4 { background-image: url(~@/assets/images/icon/icon-router-link-004.png); }
+.icon-user-link-5 { background-image: url(~@/assets/images/icon/icon-router-link-005.png); }

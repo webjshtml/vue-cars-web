@@ -1,0 +1,29 @@
+.user-info {
+    display: flex;
+    padding: 84px 0 80px 10px; // 方向顺时针，4个边
+    img {
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+        border: 6px solid #2f343a;
+    }
+    .meta {
+        flex: 1;
+        padding-left: 17px;
+    }
+    .name {
+        color: #909090;
+        line-height: 43px;
+        font-size: 18px;
+    }
+    span {
+        display: inline-block;
+        height: 27px;
+        padding: 0 17px;
+        background-color: #10a0f2;
+        border-radius: 100px;
+        line-height: 27px;
+        color: #fff;
+        font-size: 14px;
+    }
+}

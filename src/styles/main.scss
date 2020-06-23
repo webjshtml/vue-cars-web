@@ -39,3 +39,23 @@
     font-weight: 300;
     background-color: $color-main;
 }
+
+.user-container { padding: 0 30px; }
+
+/* user router-link */
+.group-links {
+    a {
+        display: block;
+        margin: 0 -30px;
+        height: 64px;
+        line-height: 64px;
+        color: rgba(255, 255, 255, .4);
+        border-bottom: 1px solid rgba(255, 255, 255, .03);
+        font-size: 15px;
+    }
+    .icon {
+        width: 30px;
+        height: 30px;
+        margin: 0 16px -10px 32px;
+    }
+}
