@@ -14,6 +14,17 @@ const routes = [
         path: "/user",
         name: "User",
         component: () => import("../views/user/index")
+      },
+      // 安全设置 - 首页
+      {
+        path: "/safe",
+        name: "Safe",
+        component: () => import("../views/safe/index")
+      },
+      {
+        path: "/password",
+        name: "Password",
+        component: () => import("../views/safe/password")
       }
     ]
   }

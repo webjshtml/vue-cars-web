@@ -38,6 +38,8 @@ export default {
         margin: 0 17px;
         vertical-align: middle;
         cursor: pointer;
+        background-color: $color-main;
+        border-radius: 100px;
     }
 }
 </style>

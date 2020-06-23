@@ -1,5 +1,6 @@
 @import "./sassConfig.scss";
 @import "./normalize.scss";
+@import "./ui.scss";
 @import "./icon.scss";
 
 /* color */
@@ -45,8 +46,10 @@
 /* user router-link */
 .group-links {
     a {
+        position: relative;
         display: block;
         margin: 0 -30px;
+        padding: 0 30px;
         height: 64px;
         line-height: 64px;
         color: rgba(255, 255, 255, .4);
@@ -56,6 +59,20 @@
     .icon {
         width: 30px;
         height: 30px;
-        margin: 0 16px -10px 32px;
+        margin: 0 16px -10px 0;
+    }
+    .arrow:after {
+        content: "";
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        width: 10px;
+        height: 10px;
+        margin-top: -7px;
+        border-top: 1px solid #fff;
+        border-right: 1px solid #fff;
+        @include webkit(box-sizing, border-box);
+        @include webkit(transform, rotate(45deg));
+        opacity: .1;
     }
 }
