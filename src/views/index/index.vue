@@ -10,15 +10,18 @@
         <div id="children-view" :class="{open: show}">
             <router-view />
         </div>
+        <!-- login -->
+        <LoginVue />
     </div>
 </template>
 <script>
 import Map from "../amap";
 import Cars from "../cars";
 import Navbar from "@c/navbar";
+import LoginVue from "./login";
 export default {
     name: "Index",
-    components: { Map, Cars, Navbar },
+    components: { Map, Cars, Navbar, LoginVue },
     data(){
         return {}
     },
@@ -31,10 +34,13 @@ export default {
     mounted(){
         document.addEventListener('mouseup', (e) => {
             const userCon = document.getElementById("children-view");
+            console.log(userCon)
+            console.log(!userCon.contains(e.target))
             if(userCon && !userCon.contains(e.target)) {
-                this.$router.push({
-                    name: "Index"
-                })
+                console.log(this.$route.name)
+                // this.$router.push({
+                //     name: "Index"
+                // })
             }
         })
     },
