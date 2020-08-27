@@ -34,13 +34,10 @@ export default {
     mounted(){
         document.addEventListener('mouseup', (e) => {
             const userCon = document.getElementById("children-view");
-            console.log(userCon)
-            console.log(!userCon.contains(e.target))
             if(userCon && !userCon.contains(e.target)) {
-                console.log(this.$route.name)
-                // this.$router.push({
-                //     name: "Index"
-                // })
+                this.$router.push({
+                    name: "Index"
+                })
             }
         })
     },

@@ -1,5 +1,5 @@
 <template>
-<div id="login">
+<div id="login" v-if="show">
     <div class="form-wrap">
         <el-form ref="form" :model="form" :rules="form_rules">
         <el-form-item prop="name">
@@ -33,7 +33,7 @@
 import sha1 from "js-sha1";
 import { validate_email, validate_password } from "@/utils/validate";
 import { GetCode, Register, Login } from "@/api/login";
-import { mapStat } from "vuex";
+import { getToken, setToken, setUsername } from "@/utils/cookies";
 export default {
   name: "Login",
   data(){
@@ -54,7 +54,7 @@ export default {
         // 检验密码
         const validate_password_rules = (rule, value, callback) => {
             let regPassword = validate_password(value);
-            let passwords_value = form.passwords;
+            let passwords_value = this.form.passwords;
             if (value === "") {
                 callback(new Error("请输入密码"));
             } else if(!regPassword){
@@ -77,6 +77,7 @@ export default {
         }
         // 检验规则
         return {
+            show: false,
             form: {
                 name: "",
                 password: "",
@@ -101,7 +102,9 @@ export default {
             }
         }
   },
-  beforeMount(){},
+  beforeMount(){
+      this.show = getToken() ? false : true
+  },
   methods: {
     // 倒计时
     countdown(number){
@@ -177,10 +180,14 @@ export default {
             code: this.form.code
         }
         Login(requestData).then(response => {
+            const data = response.data
             this.$message({
                 message: response.message,
                 type: "success"
             })
+            setUsername(data.username);
+            setToken(data.token);
+            this.show = false;
         })
     }
   }
