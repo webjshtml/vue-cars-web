@@ -3,7 +3,7 @@
         <!-- cars data渲染 -->
         <!-- <Cars /> -->
         <!-- 地图 -->
-        <Map />
+        <Map @callbackComponent="callbackComponent" />
         <!-- 导航 -->
         <Navbar />
         <!-- 会员 -->
@@ -19,6 +19,7 @@ import Map from "../amap";
 import Cars from "../cars";
 import Navbar from "@c/navbar";
 import LoginVue from "./login";
+import { Parking } from "@/api/parking";
 export default {
     name: "Index",
     components: { Map, Cars, Navbar, LoginVue },
@@ -35,11 +36,28 @@ export default {
         document.addEventListener('mouseup', (e) => {
             const userCon = document.getElementById("children-view");
             if(userCon && !userCon.contains(e.target)) {
+                const routerName = this.$route.name;
+                if(routerName === "Index") { return false; }
                 this.$router.push({
                     name: "Index"
                 })
             }
         })
+    },
+    methods: {
+        callbackComponent(params) {
+            params.function && this[params.function](params.data);
+        },
+        // 地图初始化完成回调
+        loadMap(){
+            this.getParking();
+        },
+        // 获取停车场数据
+        getParking(){
+            Parking().then(response => {
+                
+            })
+        }
     },
     watch: {}
 }
