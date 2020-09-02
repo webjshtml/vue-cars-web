@@ -3,7 +3,7 @@
         <!-- cars data渲染 -->
         <!-- <Cars /> -->
         <!-- 地图 -->
-        <Map @callbackComponent="callbackComponent" />
+        <Map ref="map" :parking="parking"  @callbackComponent="callbackComponent" />
         <!-- 导航 -->
         <Navbar />
         <!-- 会员 -->
@@ -24,7 +24,9 @@ export default {
     name: "Index",
     components: { Map, Cars, Navbar, LoginVue },
     data(){
-        return {}
+        return {
+            parking: []
+        }
     },
     computed: {
         show(){
@@ -55,7 +57,16 @@ export default {
         // 获取停车场数据
         getParking(){
             Parking().then(response => {
-                
+                const data = response.data.data;
+                data.forEach(item => {
+                    item.position = item.lnglat.split(",");
+                    item.content = "<img src='"+ require('@/assets/images/parking_location_img.png') +"' />";
+                    item.offset = [-35, -60];
+                    item.offsetText = [-35, -40];
+                    item.label = {content: "11", offset: [10, 10]};
+                    item.text = `<div style="width: 70px; font-size: 20px; color: #fff; text-align: center;">${item.carsNumber}</div>`;
+                });
+                this.parking = data
             })
         }
     },

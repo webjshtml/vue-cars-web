@@ -3,6 +3,10 @@
         <el-amap vid="amapContainer" :amap-manager="amapManager" :center="center" :zoom="zoom" :events="events" class="amap-demo">
             <!--覆盖物 - 圆-->
             <el-amap-circle v-for="item in circle" :key="item.id" :center="item.center" :radius="item.radius" :fillColor="item.color" :strokeColor="item.color" :strokeOpacity="item.strokeOpacity" :strokeWeight="item.strokeWeight"></el-amap-circle>
+            <!--覆盖物 - 停车场-->
+            <el-amap-marker v-for="(item, index) in parking" :key="item.id" :content="item.content" :offset="item.offset" :position="item.position" :vid="index"></el-amap-marker>
+            <!--覆盖物 - 停车场 - 车辆-->
+            <el-amap-marker v-for="(item, index) in parking" :key="item.id" :content="item.text" :offset="item.offsetText" :position="item.position" :vid="index"></el-amap-marker>
         </el-amap>
     </div>
 </template>
@@ -56,10 +60,17 @@ export default {
         onComplete(data){
             const lng = data.position.lng;
             const lat = data.position.lat;
+            console.log([lng, lat])
             this.circle[0].center = [lng, lat];
         }
     },
     mounted(){},
+    props: {
+        parking: {
+            type: Array,
+            default: () => ([])
+        }
+    },
     watch: {
         "$store.state.location.selfLocation": {
             handler(){
