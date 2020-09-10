@@ -18,4 +18,3 @@ export function SelfLocation(params){ //{ map: "", current: ""}
         AMap.event.addListener(geolocation, 'error', params.error); //定位失败
     }
 }
-

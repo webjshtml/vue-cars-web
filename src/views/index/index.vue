@@ -62,12 +62,24 @@ export default {
                     item.position = item.lnglat.split(",");
                     item.content = "<img src='"+ require('@/assets/images/parking_location_img.png') +"' />";
                     item.offset = [-35, -60];
-                    item.offsetText = [-35, -40];
+                    item.offsetText = [-30, -55];
                     item.label = {content: "11", offset: [10, 10]};
-                    item.text = `<div style="width: 70px; font-size: 20px; color: #fff; text-align: center;">${item.carsNumber}</div>`;
+                    item.text = `<div style="width: 60px; font-size: 20px; color: #fff; text-align: center;line-height: 50px; height: 60px;">${item.carsNumber}</div>`;
+                    item.events = {
+                        click: (e) => this.walking(e)
+                    }
                 });
                 this.parking = data
             })
+        },
+        walking(e){
+            const data = e.target.getExtData();
+            this.$refs.map.saveData({
+                key: "parkingData",
+                value: data
+            });
+
+            this.$refs.map.handlerWalking(data.lnglat.split(","));
         }
     },
     watch: {}
