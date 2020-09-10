@@ -66,7 +66,9 @@ export default {
                     item.label = {content: "11", offset: [10, 10]};
                     item.text = `<div style="width: 60px; font-size: 20px; color: #fff; text-align: center;line-height: 50px; height: 60px;">${item.carsNumber}</div>`;
                     item.events = {
-                        click: (e) => this.walking(e)
+                        click: (e) => {
+                            this.walking(e);
+                        }
                     }
                 });
                 this.parking = data
