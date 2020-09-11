@@ -3,17 +3,19 @@
         <section class="cars-item">
             <header>
                 <h4 class="cars-logo">
-                    <img src="../../assets/images/cars-logo.png" alt="Mustang 2019款">
-                    <span class="name">Mustang 2019款</span>
+                    <img :src="data.imgUrl" :alt="data.carsMode">
+                    <span class="name">{{ data.carsMode }}</span>
                 </h4>
-                <p class="cars-attr">新能源汽车  5座</p>
+                <p class="cars-attr">
+                    {{ data.energyType == 1 ? "新能源汽车" : "油"}} 5座
+                </p>
             </header>
             <div class="cars-content">
                 <div class="info">
                     <div>
-                        <h4 class="cars-number">粤 B745N8</h4>
+                        <h4 class="cars-number">{{ data.carsNumber }}</h4>
                         <div>
-                            <ul class="cars-electric active-li-8">
+                            <ul class="cars-electric" :class="data.oil | electricNumber">
                                 <li></li>
                                 <li></li>
                                 <li></li>
@@ -33,13 +35,13 @@
                         </div>
                     </div>
                 </div>
-                <img src="../../assets/images/pic001.jpg" alt="">
+                <img src="../../../assets/images/pic001.jpg" alt="">
             </div>
             <footer>
-                <a href="javascript: void(0);" class="parking-link">某某停车场</a>
+                <a href="javascript: void(0);" class="parking-link">{{ data.parkingName }}</a>
             </footer>
         </section>
-        <section class="cars-item cars-detailed" :style="'height:' + height">
+        <!-- <section class="cars-item cars-detailed" :style="'height:' + height">
             <div class="scroll">
                 <h4 class="column">
                     某某停车场
@@ -47,12 +49,12 @@
                 </h4>
                 <header>
                     <h4 class="cars-logo">
-                        <img src="../../assets/images/cars-logo.png" alt="Mustang 2019款">
+                        <img src="../../../assets/images/cars-logo.png" alt="Mustang 2019款">
                         <span class="name">Mustang 2019款</span>
                     </h4>
                     <p class="cars-attr">新能源汽车  5座</p>
                 </header>
-                <img src="../../assets/images/pic001.jpg" alt="" width="100%">
+                <img src="../../../assets/images/pic001.jpg" alt="" width="100%">
                 <div class="clearfix">
                     <div class="pull-left fs-24">粤B745N8</div>
                     <p class="distance pull-right">
@@ -92,13 +94,23 @@
                 </div>
             </div>
             <a href="javascript: void(0);" class="select-car-btn">预约用车</a>
-        </section>
+        </section> -->
     </div>
 </template>
 <script>
 export default {
     name: "CarsList",
+    filters: {
+        electricNumber(val){
+            const number = Math.round(val / 10);
+            return `active-li-${number}`;  // 四舍五入，向上取整
+        }
+    },
     props: {
+        data: {
+            type: Object,
+            default: () => ({})
+        },
         height: {
             type: String,
             default: "257px"

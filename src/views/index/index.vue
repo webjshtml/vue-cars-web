@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- cars data渲染 -->
-        <!-- <Cars /> -->
+        <Cars ref="cars" />
         <!-- 地图 -->
         <Map ref="map" :parking="parking"  @callbackComponent="callbackComponent" />
         <!-- 导航 -->
@@ -20,6 +20,7 @@ import Cars from "../cars";
 import Navbar from "@c/navbar";
 import LoginVue from "./login";
 import { Parking } from "@/api/parking";
+
 export default {
     name: "Index",
     components: { Map, Cars, Navbar, LoginVue },
@@ -67,7 +68,8 @@ export default {
                     item.text = `<div style="width: 60px; font-size: 20px; color: #fff; text-align: center;line-height: 50px; height: 60px;">${item.carsNumber}</div>`;
                     item.events = {
                         click: (e) => {
-                            this.walking(e);
+                            this.walking(e);  // 路线规划
+                            this.getCarsList(e);  // 车辆列表
                         }
                     }
                 });
@@ -82,6 +84,11 @@ export default {
             });
 
             this.$refs.map.handlerWalking(data.lnglat.split(","));
+        },
+        getCarsList(e){
+            const data = e.target.getExtData();
+            // 父组件调子组件的方法
+            this.$refs.cars && this.$refs.cars.getCarsList(data.id)
         }
     },
     watch: {}
