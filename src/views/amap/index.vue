@@ -26,7 +26,7 @@ export default {
         return {
             map: null,
             amapManager,
-            center: [121.59996, 31.197646],
+            center: [114.246754, 22.721943],
             zoom: 18,
             // self position
             self_lng: "",
@@ -74,6 +74,7 @@ export default {
         },
         /** 自身定位 成功回调 */
         selfLocationComplete(data){
+            console.log(333)
             this.self_lng = data.position.lng;
             this.self_lat = data.position.lat;
             const json = {
