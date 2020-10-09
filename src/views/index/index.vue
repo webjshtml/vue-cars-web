@@ -35,18 +35,6 @@ export default {
             return rotuer.name === "Index" ? false : true;
         }
     },
-    mounted(){
-        document.addEventListener('mouseup', (e) => {
-            const userCon = document.getElementById("children-view");
-            if(userCon && !userCon.contains(e.target)) {
-                const routerName = this.$route.name;
-                if(routerName === "Index") { return false; }
-                this.$router.push({
-                    name: "Index"
-                })
-            }
-        })
-    },
     methods: {
         callbackComponent(params) {
             params.function && this[params.function](params.data);
@@ -68,6 +56,7 @@ export default {
                     item.text = `<div style="width: 60px; font-size: 20px; color: #fff; text-align: center;line-height: 50px; height: 60px;">${item.carsNumber}</div>`;
                     item.events = {
                         click: (e) => {
+                            this.$store.commit("app/SET_CARS_LIST_REQUEST", true);
                             this.walking(e);  // 路线规划
                             this.getCarsList(e);  // 车辆列表
                         }

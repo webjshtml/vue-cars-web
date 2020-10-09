@@ -1,5 +1,5 @@
 <template>
-    <div class="cars-wrap">
+    <div class="cars-wrap" v-if="carsList && carsList.length > 0">
         <div class="cars-swiper-wrap">
             <swiper class="swiper" :options="swiperOption">
                 <swiper-slide v-for="item in carsList" :key="item.id"><CarsItem :data="item" /></swiper-slide>
@@ -42,7 +42,17 @@ export default {
             GetCarsList({ parkingId }).then(response => {  //变量名称相同的情况下，可以用一个，是ES6的语法
                 const data = response.data.data;
                 data && (this.carsList = data);
+                // 还原状态
+                this.$store.commit("app/SET_CARS_LIST_REQUEST", false);
             })
+        }
+    },
+    watch: {
+        "$store.state.app.isClickCarsList": {
+            handler(newValue){
+                if(!newValue) { this.carsList = []; }  // 为 false 时，点击的不是车辆列表
+                this.$store.commit("app/SET_CARS_LIST_STATUS", true);
+            }
         }
     }
 }

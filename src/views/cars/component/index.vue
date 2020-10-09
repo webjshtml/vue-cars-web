@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section class="cars-item">
+        <section class="cars-item" @click="getCasrInfo">
             <header>
                 <h4 class="cars-logo">
                     <img :src="data.imgUrl" :alt="data.carsMode">
@@ -42,51 +42,39 @@
                 <a href="javascript: void(0);" class="parking-link">{{ data.parkingName }}</a>
             </footer>
         </section>
-        <!-- <section class="cars-item cars-detailed" :style="'height:' + height">
+        <section class="cars-item cars-detailed" :style="'height:' + cars_info_height" v-if="cars_info_show">
             <div class="scroll">
                 <h4 class="column">
-                    某某停车场
-                    <i class="close"></i>
+                    {{ data.parkingName }}
+                    <i class="close" @click="closeCarsInfo"></i>
                 </h4>
                 <header>
                     <h4 class="cars-logo">
-                        <img src="../../../assets/images/cars-logo.png" alt="Mustang 2019款">
-                        <span class="name">Mustang 2019款</span>
+                        <img :src="data.imgUrl" :alt="data.carsMode">
+                        <span class="name">{{ data.carsMode }}</span>
                     </h4>
-                    <p class="cars-attr">新能源汽车  5座</p>
+                    <p class="cars-attr">{{ data.carsAttr | energyType }}  {{ data.carsAttr | seatNumber }}座</p>
                 </header>
                 <img src="../../../assets/images/pic001.jpg" alt="" width="100%">
                 <div class="clearfix">
-                    <div class="pull-left fs-24">粤B745N8</div>
+                    <div class="pull-left fs-24">{{ data.carsNumber }}</div>
                     <p class="distance pull-right">
                         <sub>约</sub>
-                        <strong>600</strong>
+                        <strong>{{ data.countKm }}</strong>
                         <sub>KM</sub>
                     </p>
                 </div>
                 <div class="cars-electric-box">
                     <div class="p-r">
-                        <span class="e-high" style="width: 80%;"></span>
+                        <span class="e-high" :style="`width: ${Math.round(data.oil / 10) * 10}%`"></span>
                         <span class="e-bg"></span>
                     </div>
                 </div>
                 <p class="info color-main text-center">取车约支付12.0元停车费，实际补贴12.0元</p>
                 <ul class="cars-type-list">
-                    <li class="current">
-                        <h4 class="name">日租车</h4>
-                        <span class="price">￥300/1天</span>
-                    </li>
-                    <li>
-                        <h4 class="name">日租车</h4>
-                        <span class="price">￥300/1天</span>
-                    </li>
-                    <li>
-                        <h4 class="name">日租车</h4>
-                        <span class="price">￥300/1天</span>
-                    </li>
-                    <li>
-                        <h4 class="name">日租车</h4>
-                        <span class="price">￥300/1天</span>
+                    <li v-for="item in leaseListData" :class="{'current': leaseId == item.carsLeaseTypeId}" :key="item.carsLeaseTypeId" @click="selectLeaseType(item)">
+                        <h4 class="name">{{ item.carsLeaseTypeName }}</h4>
+                        <span class="price">￥{{ item.price }}</span>
                     </li>
                 </ul>
                 <div class="clause-dec">
@@ -95,16 +83,19 @@
                 </div>
             </div>
             <a href="javascript: void(0);" class="select-car-btn">预约用车</a>
-        </section> -->
+        </section>
     </div>
 </template>
 <script>
 import { getCarsAttrKey } from "@/utils/format";
+// API 
+import { GetLeaseList } from "@/api/cars";
 export default {
     name: "CarsList",
     filters: {
         electricNumber(val){
             const number = Math.round(val / 10);
+            console.log(number)
             return `active-li-${number}`;  // 四舍五入，向上取整
         },
         energyType(val){
@@ -122,14 +113,64 @@ export default {
             });
         },
     },
-    props: {
+    data(){
+        return {
+            cars_info_show: false,
+            // 车辆信息弹窗高度
+            cars_info_height: 0,
+            // 定时器
+            timer: null,
+            // 租赁类型列表
+            leaseListData: [],
+            // 租赁ID
+            leaseId: ""
+        }
+    },
+    methods: {
+        getCasrInfo(){
+            this.openCarsInfo();
+        },
+        /** 选择租赁类型 */
+        selectLeaseType(data){
+            console.log(data)
+            this.leaseId = data.carsLeaseTypeId;
+        },
+        /** 打开车辆信息 */
+        openCarsInfo(){
+            // 高度计算
+            const viewHeight = document.documentElement.clientHeight || document.body.clientHeight;
+            const height = viewHeight - 115;
+            // 打开信息
+            this.cars_info_show = true;
+            // 定时器
+            if(this.timer) { clearTimeout(this.timer); }  // 防止连续点击，开启多个定时器
+            this.timer = setTimeout(() => {
+                this.cars_info_height = `${height}px`;
+                clearTimeout(this.timer);
+            }, 10)
+             /** 获取租赁类 */
+            this.getLaseList();
+        },
+        /** 获取租赁类 */
+        getLaseList(){
+            if(this.leaseListData && this.leaseListData.length > 0) { return false; }
+            GetLeaseList({carsId: this.data.id}).then(response => {
+                const dataItem = response.data;
+                if(dataItem) {
+                    this.leaseListData = dataItem.data;
+                }
+            })
+        },
+        /** 关闭车辆信息 */
+        closeCarsInfo(){
+            this.cars_info_show = false;
+            this.cars_info_height = 0;
+        }
+    },
+    props: {  // 单向数据流，也是静态属性
         data: {
             type: Object,
             default: () => ({})
-        },
-        height: {
-            type: String,
-            default: "257px"
         }
     }
 }
