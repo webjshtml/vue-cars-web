@@ -5,6 +5,7 @@
 
 /* color */
 .color-main { color: $color-main; }
+.color-white { color: white; }
 
 /* text-algin */
 .text-center { text-align: center; }
@@ -25,6 +26,8 @@
 /* clearfix */
 .clearfix { @extend %clearfix; }
 
+/* opacity */
+.opacity-4 { opacity: .4; }  // 0~1 
 
 /* common ui */
 .select-car-btn {
