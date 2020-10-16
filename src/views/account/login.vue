@@ -8,7 +8,7 @@
         <div class="cars-form-ui">
             <el-form ref="form" :model="form">
                 <el-form-item>
-                    <el-input v-model="form.name" placeholder="原始密码"></el-input>
+                    <Username />
                 </el-form-item>
                 <el-form-item>
                     <el-input v-model="form.name" placeholder="新密码"></el-input>
@@ -31,9 +31,10 @@
     </div>
 </template>
 <script>
+import Username from "@/components/account/username";
 export default {
     name: "Password",
-    components: {},
+    components: { Username },
     data(){
         return {
             form: {

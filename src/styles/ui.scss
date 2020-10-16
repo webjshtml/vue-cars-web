@@ -25,6 +25,7 @@
         outline: none;
         border: none;
         cursor: pointer;
+        &[disabled] { opacity: .5; }
     }
 }
 .button-black {
