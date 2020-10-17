@@ -7,18 +7,10 @@
         </Back>
         <div class="cars-form-ui">
             <el-form ref="form" :model="form">
-                <el-form-item>
-                    <Username :value.sync="form.username" />
-                </el-form-item>
-                <el-form-item>
-                    <el-input v-model="form.name" placeholder="新密码"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-input v-model="form.name" placeholder="确认密码"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <Code :username="form.username" />
-                </el-form-item>
+                <Username :value.sync="form.username" />
+                <PasswordVue :passwordConfirm="form.passwordConfirm" :value.sync="form.password" /> <!--接收“确认密码”的值 -->
+                <PasswordConfirm :password="form.password" :value.sync="form.passwordConfirm" />  <!--接收“密码”的值 -->
+                <Code :username="form.username" :value.sync="form.code" />
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit" class="button-black">确定</el-button>
                 </el-form-item>
@@ -28,19 +20,32 @@
 </template>
 <script>
 import Username from "@/components/account/username";
+import PasswordVue from "@/components/account/password";
+import PasswordConfirm from "@/components/account/passwordConfirm";
 import Code from "@/components/code/";
 export default {
     name: "Password",
-    components: { Username, Code },
+    components: { Username, Code, PasswordVue, PasswordConfirm },
     data(){
         return {
             form: {
-                username: ''
+                username: "",
+                password: "",
+                passwordConfirm: "",
+                code: ""
             }
         }
     },
     methods: {
         onSubmit() {
+            this.$refs["form"].validate((valid) => {
+                if (valid) {
+                    alert('submit!');
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
             console.log(this.form);
         }
     }

@@ -1,13 +1,13 @@
 <template>
-    <div>
+    <el-form-item prop="code" :rules="rules">
         <button type="button" class="button-vcode" :disabled="disabled" @click="handlerCode">{{ button_text }}</button>
-        <el-input v-model="code" placeholder="验证码"></el-input>
-    </div>
+        <el-input v-model="code" placeholder="验证码" v-on:input="enterInput"></el-input>
+    </el-form-item>
 </template>
 
 <script>
 export default {
-    name: '',
+    name: 'Code',
     components: {},
     props: {
         username: {
@@ -24,10 +24,18 @@ export default {
             // 验证码
             code: "",
             // 定时器
-            timer: null
+            timer: null,
+            // 校验规则 
+            rules: [
+                { required: true, message: "验证不能为空", trigger: "blur" },
+                { min: 6, max: 6, message: "请输入6位字符的验证码", trigger: "change" }
+            ]
         }
     },
     methods: {
+        enterInput(){
+            this.$emit("update:value", this.code);
+        },
         handlerCode(){
             this.countDown();
         },

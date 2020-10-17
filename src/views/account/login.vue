@@ -7,19 +7,8 @@
         </Back>
         <div class="cars-form-ui">
             <el-form ref="form" :model="form">
-                <el-form-item>
-                    <Username />
-                </el-form-item>
-                <el-form-item>
-                    <el-input v-model="form.name" placeholder="新密码"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-input v-model="form.name" placeholder="确认密码"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <button type="button" class="button-vcode">获取验证码</button>
-                    <el-input v-model="form.name" placeholder="验证码"></el-input>
-                </el-form-item>
+                <Username :value.sync="form.username" />
+                <PasswordVue :passwordConfirm="form.passwordConfirm" :value.sync="form.password" /> <!--接收“确认密码”的值 -->
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit" class="button-black">确定</el-button>
                 </el-form-item>
@@ -32,26 +21,30 @@
 </template>
 <script>
 import Username from "@/components/account/username";
+import PasswordVue from "@/components/account/password";
 export default {
-    name: "Password",
-    components: { Username },
+    name: "Login",
+    components: { Username, PasswordVue },
     data(){
         return {
             form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
+                username: "",
+                password: ""
             }
         }
+        // 复用性
     },
     methods: {
         onSubmit() {
-            console.log('submit!');
+            this.$refs["form"].validate((valid) => {
+                if (valid) {
+                    alert('submit!');
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+            console.log(this.form);
         }
     }
 }
