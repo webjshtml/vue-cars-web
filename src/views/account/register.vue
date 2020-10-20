@@ -23,6 +23,10 @@ import Username from "@/components/account/username";
 import PasswordVue from "@/components/account/password";
 import PasswordConfirm from "@/components/account/passwordConfirm";
 import Code from "@/components/code/";
+// API
+import { Register } from "@/api/account";
+// sha1
+import sha1 from "js-sha1";
 export default {
     name: "Password",
     components: { Username, Code, PasswordVue, PasswordConfirm },
@@ -40,13 +44,31 @@ export default {
         onSubmit() {
             this.$refs["form"].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    this.register();
                 } else {
+                    //
                     console.log('error submit!!');
                     return false;
                 }
             });
             console.log(this.form);
+        },
+        // 注册
+        register(){
+            const requestData = {
+                username: this.form.username,
+                password: sha1(this.form.password),  // md5，sha1
+                code: this.form.code
+            }
+            Register(requestData).then(response => {
+                this.$message({
+                    type: "success",
+                    message: response.message
+                })
+                this.$router.push({
+                    name: "Login"
+                })
+            })
         }
     }
 }

@@ -1,11 +1,12 @@
 <template>
     <el-form-item prop="code" :rules="rules">
-        <button type="button" class="button-vcode" :disabled="disabled" @click="handlerCode">{{ button_text }}</button>
+        <el-button class="button-vcode" :loading="loading" :disabled="disabled" @click="handlerCode">{{ button_text }}</el-button>
         <el-input v-model="code" placeholder="验证码" v-on:input="enterInput"></el-input>
     </el-form-item>
 </template>
 
 <script>
+import { GetCode } from "@/api/account";
 export default {
     name: 'Code',
     components: {},
@@ -19,6 +20,8 @@ export default {
         return {
             // 按钮状态
             disabled: true,
+            // 按钮加载状态
+            loading: false,
             // 按钮文本
             button_text: "获取验证码",
             // 验证码
@@ -37,7 +40,22 @@ export default {
             this.$emit("update:value", this.code);
         },
         handlerCode(){
-            this.countDown();
+            const requestData = {
+                username: this.username,
+                module: "register"
+            }
+            this.loading = true;
+            GetCode(requestData).then(response => {
+                this.$message({
+                    type: "success",
+                    message: response.message
+                })
+                this.loading = false;
+                this.countDown();
+            }).catch(error => {
+                this.loading = false;
+            })
+            
         },
         countDown(){
             let second = 60;

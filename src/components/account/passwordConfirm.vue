@@ -1,6 +1,6 @@
 <template>
-    <el-form-item prop="passwordConfirm" :rules="[{ validator: validatePassword, trigger: 'change' }]">
-        <el-input v-model="passwordConfirm" :placeholder="placeholder" v-on:input="enterInput"></el-input>
+    <el-form-item id="passwordConfirm" prop="passwordConfirm" :rules="[{ validator: validatePassword, trigger: 'change' }]">
+        <el-input type="password" v-model="passwordConfirm" :placeholder="placeholder" v-on:input="enterInput"></el-input>
     </el-form-item>
     <!--小灵通-->
 </template>
@@ -43,6 +43,18 @@ export default {
             const valiStatus = validate_password(this.passwordConfirm);
             let value = valiStatus ? this.passwordConfirm : "";
             this.$emit("update:value", value)
+        }
+    },
+    watch: {
+        password: {
+            handler(newValue, oldValue){
+                if(newValue == this.passwordConfirm) {
+                    const errorDom = document.getElementById("passwordConfirm").querySelector(".el-form-item__error");
+                    if(errorDom) {
+                        errorDom.style.display = "none";
+                    }
+                }
+            }
         }
     }
 }

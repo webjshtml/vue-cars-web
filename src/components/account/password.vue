@@ -1,6 +1,6 @@
 <template>
-    <el-form-item prop="password" :rules="[{ validator: validatePassword, trigger: 'change' }]">
-        <el-input v-model="password" :placeholder="placeholder" v-on:input="enterInput"></el-input>
+    <el-form-item id="password" prop="password" :rules="[{ validator: validatePassword, trigger: 'change' }]">
+        <el-input type="password" v-model="password" :placeholder="placeholder" v-on:input="enterInput"></el-input>
     </el-form-item>
     <!--小灵通-->
 </template>
@@ -47,7 +47,12 @@ export default {
     watch: {
         passwordConfirm: {
             handler(newValue, oldValue){
-                // this.validatePassword()  // 当做是一个 BUG 的存在，后续会解决此问题。
+                if(newValue == this.password) {
+                    const errorDom = document.getElementById("password").querySelector(".el-form-item__error");
+                    if(errorDom) {
+                        errorDom.style.display = "none";
+                    }
+                }
             }
         }
     }
