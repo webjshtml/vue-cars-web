@@ -22,12 +22,8 @@
 <script>
 import Username from "@/components/account/username";
 import PasswordVue from "@/components/account/password";
-// API
-import { Login } from "@/api/account";
 // sha1
 import sha1 from "js-sha1";
-// cookies
-import { setToken, setUsername } from "@/utils/cookiesCars";
 export default {
     name: "Login",
     components: { Username, PasswordVue },
@@ -50,17 +46,17 @@ export default {
                     return false;
                 }
             });
-            console.log(this.form);
         },
         login(){
             const requestData = {
                 username: this.form.username,
                 password: sha1(this.form.password)
             }
-            Login(requestData).then(response => {
-                const data = response.data
-                setToken(data.token);
-                setUsername(data.username);
+            this.$store.dispatch("account/loginAction", requestData).then(response => {
+                this.$message({
+                    type: "success",
+                    message: response.message
+                })
                 this.$router.push({
                     name: "Index"
                 })

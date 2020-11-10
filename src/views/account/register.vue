@@ -23,8 +23,7 @@ import Username from "@/components/account/username";
 import PasswordVue from "@/components/account/password";
 import PasswordConfirm from "@/components/account/passwordConfirm";
 import Code from "@/components/code/";
-// API
-import { Register } from "@/api/account";
+
 // sha1
 import sha1 from "js-sha1";
 export default {
@@ -51,7 +50,6 @@ export default {
                     return false;
                 }
             });
-            console.log(this.form);
         },
         // 注册
         register(){
@@ -60,15 +58,18 @@ export default {
                 password: sha1(this.form.password),  // md5，sha1
                 code: this.form.code
             }
-            Register(requestData).then(response => {
+            this.$store.dispatch("account/registerAction", requestData).then(response => {
                 this.$message({
                     type: "success",
                     message: response.message
                 })
-                this.$router.push({
+                this.$router.replace({
                     name: "Login"
                 })
+            }).catch(error => {
+
             })
+            
         }
     }
 }

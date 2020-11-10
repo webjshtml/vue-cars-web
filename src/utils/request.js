@@ -3,6 +3,8 @@ import axios from "axios";
 import { getToken, getUsername } from "./cookies";
 // ElementUI 单独引入
 import { Message } from 'element-ui';
+// sha1
+import sha1 from "js-sha1";
 // 创建实例
 const service = axios.create({
     baseURL: "",    // 请求地址  /apiLogin/getCode/
@@ -15,6 +17,8 @@ service.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     config.headers['Token'] = getToken();  // 携带token
     config.headers['Username'] = getUsername();  // 携带token
+    config.headers['Account'] = "409019683@qq.com";  // 后台的帐号
+    config.headers['Password'] = sha1("wo123456789");  // 后台的帐号
     return config;
 }, function (error) {
     // 对请求错误做些什么

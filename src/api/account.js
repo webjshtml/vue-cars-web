@@ -32,3 +32,14 @@ export function Login(data){
     })
 }
 
+
+/**
+ * 登录
+ */
+export function Forget(data){
+    return service.request({
+        method: "post",
+        url: `${process.env.VUE_APP_API_WEB}/account/forget/`,
+        data
+    })
+}
