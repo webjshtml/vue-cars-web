@@ -12,12 +12,13 @@
     </div>
 </template>
 <script>
+import { getToken } from "@/utils/cookiesCars";
 export default {
     name: "Navbar",
     methods: {
         toUser(){
             this.$router.push({
-                name: "User"
+                name: getToken() ? "User" : "Login"
             })
         }
     }
