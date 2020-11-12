@@ -137,7 +137,23 @@ const routes = [
           title: "订单详情"
         },
         component: () => import("../views/order/detailed")
-      }
+      },
+      {
+        path: "/payStatus",
+        name: "PayStatus",
+        meta: {
+          title: "支付状态"
+        },
+        component: () => import("../views/pay/status")
+      },
+      {
+        path: "/payResult",
+        name: "PayResult",
+        meta: {
+          title: "支付结果"
+        },
+        component: () => import("../views/pay/result")
+      },
     ]
   }
 ];
