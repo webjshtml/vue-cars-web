@@ -6,18 +6,26 @@
             <p>a2121fads34fas31fa</p>
         </div>
         <div class="blank-40"></div>
+<<<<<<< HEAD
         <div><el-button type="warning" round class="button-block" @click="gotoPay"><strong>去支付</strong></el-button></div>
+=======
+        <div><el-button type="warning" round class="button-block"><strong>去支付</strong></el-button></div>
+>>>>>>> html-static
         <div class="blank-20"></div>
         <div><el-button type="primary" round class="button-block"><strong>完成支付</strong></el-button></div>
     </div>
 </template>
 <script>
+<<<<<<< HEAD
 import { OrderStatus } from "@/api/order";
 import { setInterval, clearInterval } from 'timers';
+=======
+>>>>>>> html-static
 export default {
     name: "PayStatus",
     components: {},
     data(){
+<<<<<<< HEAD
         return {
             timer: null
         }
@@ -52,6 +60,11 @@ export default {
         }
 
     }
+=======
+        return {}
+    },
+    methods: {}
+>>>>>>> html-static
 }
 </script>
 <style lang="scss">

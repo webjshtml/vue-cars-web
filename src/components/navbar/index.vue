@@ -6,19 +6,23 @@
             <li>
                 <a href="javascript: void(0);" class="select-car-btn">选择车辆</a>
             </li>
-            <li><i class="icon icon-w-44 icon-location"></i></li>
+            <li><i class="icon icon-w-44 icon-location" @click="selfLocation"></i></li>
             <li><i class="icon icon-w-44 icon-user" @click="toUser"></i></li>
         </ul>
     </div>
 </template>
 <script>
+import { getToken } from "@/utils/cookiesCars";
 export default {
     name: "Navbar",
     methods: {
         toUser(){
             this.$router.push({
-                name: "User"
+                name: getToken() ? "User" : "Login"
             })
+        },
+        selfLocation(){
+            this.$store.commit("location/SELF_LOCATION");
         }
     }
 }

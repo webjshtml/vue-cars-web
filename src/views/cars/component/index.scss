@@ -22,6 +22,7 @@
     float: right;
     line-height: 34px;
     opacity: .5;
+    span { padding: 0 5px; }
 }
 .cars-content {
     position: relative;
@@ -103,6 +104,8 @@
     right: 0;
     bottom: 0;
     padding-top: 0;
+    height: 0;
+    @include webkit(transition, all .3s ease 0s);
     .scroll { 
         height: 100%;
         overflow-y: auto;

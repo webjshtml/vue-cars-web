@@ -127,9 +127,13 @@ export default {
             // token
             token: this.$store.state.account.token,
             // 检验提示
+<<<<<<< HEAD
             message_item: this.$store.state.config.message_item,
             // 临时使用
             backup_key: ""
+=======
+            message_item: this.$store.state.config.message_item
+>>>>>>> html-static
         }
     },
     methods: {
@@ -159,8 +163,12 @@ export default {
                     // 匹配 message
                     const key = Object.keys(data);  // 获取 key  []
                     if(key && key.length > 0) {
+<<<<<<< HEAD
                         this.backup_key = key[0]; // 临时存储
                         let msg = this.message_item[key[0]].msg;
+=======
+                        let msg = this.message_item[key[0]];
+>>>>>>> html-static
                         msg && (message = msg)
                     }
                     // 弹窗提示
@@ -169,6 +177,7 @@ export default {
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
+<<<<<<< HEAD
                         let router = this.message_item[this.backup_key].router;
                         if(router) {
                             this.$router.push({
@@ -176,6 +185,9 @@ export default {
                             })
                         }
                         console.log(router)
+=======
+                        
+>>>>>>> html-static
                     })
                     return false;
                 }

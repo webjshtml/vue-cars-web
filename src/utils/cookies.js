@@ -14,3 +14,13 @@ export function setUsername(value){ return Cookies.set(userNameKey, value); }
 export function getUsername(){ return Cookies.get(userNameKey); }
 // 删除userName
 export function removeUsername(){ return Cookies.remove(userNameKey); }
+
+/****************************************
+ * ***** 用户
+ * ********************************************************* */
+
+ // 变量
+const accountToken = "accountToken";
+const accountUsername = "accountUsername";
+// 获取token
+export function getAccountToken(){ return Cookies.get(accountToken); }
