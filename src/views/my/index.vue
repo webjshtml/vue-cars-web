@@ -13,7 +13,7 @@
                         <span>2000.00</span>
                     </div>
                     <div class="price pull-right">
-                        <router-link to="/recharge" class="goto">去充值</router-link>
+                        <router-link :to="{ path: '/recharge', query: { type: 'amount' } }"  class="goto">去充值</router-link>
                     </div>
                 </div>
             </div>

@@ -6,26 +6,18 @@
             <p>a2121fads34fas31fa</p>
         </div>
         <div class="blank-40"></div>
-<<<<<<< HEAD
         <div><el-button type="warning" round class="button-block" @click="gotoPay"><strong>去支付</strong></el-button></div>
-=======
-        <div><el-button type="warning" round class="button-block"><strong>去支付</strong></el-button></div>
->>>>>>> html-static
         <div class="blank-20"></div>
-        <div><el-button type="primary" round class="button-block"><strong>完成支付</strong></el-button></div>
+        <div><el-button type="primary" round class="button-block" @click="overPay"><strong>完成支付</strong></el-button></div>
     </div>
 </template>
 <script>
-<<<<<<< HEAD
 import { OrderStatus } from "@/api/order";
 import { setInterval, clearInterval } from 'timers';
-=======
->>>>>>> html-static
 export default {
     name: "PayStatus",
     components: {},
     data(){
-<<<<<<< HEAD
         return {
             timer: null
         }
@@ -35,36 +27,47 @@ export default {
         this.setInter();
     },
     methods: {
-        getOrderStatus(){
+        orderStatus(){
             const order_no = localStorage.getItem("order_no");
-            OrderStatus({order_no}).then(response => {
+            return OrderStatus({order_no}).then(response => {
                 const status = response.data.status;
-                if(status == 'success') {
-                    clearInterval(this.timer);
-                    // this.$router.replace({
-                    //     name: "PayResult",
-                    //     query: {
-                    //         status
-                    //     }
-                    // })
-                }
+                return status;
             })
+        },
+        async getOrderStatus(){
+            const status = await this.orderStatus();
+            this.toResult(status);
         },
         setInter(){
             this.timer = setInterval(() => {
                 this.getOrderStatus();
             }, 3000)
         },
-        gotoPay(){
-            
+        async gotoPay(){  // async：执行某些东西，await：等某些东西执行完成
+            const status = await this.orderStatus();
+            this.toResult(status);
+        },
+        async overPay(){
+            const status = await this.orderStatus();
+            this.toResult(status);
+        },
+        toResult(status){
+            if(status == 'success') {
+                clearInterval(this.timer);
+                this.$router.replace({
+                    name: "PayResult",
+                    query: {
+                        status
+                    }
+                })
+            }
+
+            if(status == 'fail') {
+                
+            }
         }
 
     }
-=======
-        return {}
-    },
-    methods: {}
->>>>>>> html-static
 }
 </script>
 <style lang="scss">

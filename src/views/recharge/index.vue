@@ -1,6 +1,5 @@
 <template>
     <div class="user-container">
-<<<<<<< HEAD
         <Back />
         <div class="amount-list">
             <div class="item" v-for="item in data" :key="item.id" @click="checkAmount(item)">
@@ -9,33 +8,8 @@
         </div>
         <div class="cars-form-ui">
             <el-form ref="form">
-=======
-        <Back column="安全设置" />
-        <div class="amount-list">
-            <div class="item">
-                <div class="a-wrap current">100</div>
-            </div>
-            <div class="item">
-                <div class="a-wrap">200</div>
-            </div>
-            <div class="item">
-                <div class="a-wrap">400</div>
-            </div>
-            <div class="item">
-                <div class="a-wrap">5000</div>
-            </div>
-            <div class="item">
-                <div class="a-wrap">1000</div>
-            </div>
-            <div class="item">
-                <div class="a-wrap">2000</div>
-            </div>
-        </div>
-        <div class="cars-form-ui">
-            <el-form ref="form" :model="form">
->>>>>>> html-static
                 <el-form-item>
-                    <el-input placeholder="请输入充值金额"></el-input>
+                    <el-input v-model.number="amount_number" placeholder="请输入充值金额" v-on:input="inputEnter"></el-input>
                 </el-form-item>
             </el-form>
         </div>
@@ -58,27 +32,23 @@
             </div>
         </section>
         <div class="blank-100"></div>
-<<<<<<< HEAD
-        <el-button type="primary" class="button-block" :disabled="!amount" round @click="confirmSubmit">确认充值</el-button>
+        <el-button type="primary" class="button-block" :disabled="disabled_button" round @click="confirmSubmit">确认充值</el-button>
     </div>
 </template>
 <script>
 import { AmountList, Pay } from "@/api/pay";
-=======
-        <el-button type="primary" class="button-block" round>确认充值</el-button>
-    </div>
-</template>
-<script>
->>>>>>> html-static
 export default {
     name: "User",
     components: {},
     data(){
         return {
-<<<<<<< HEAD
             data: [],
             amount_id: "",
-            amount: ""
+            amount: "",
+            amount_number: "",
+            pay_type: this.$route.query.type,
+            // disabled_button
+            disabled_button: true
         }
     },
     beforeMount(){
@@ -96,11 +66,24 @@ export default {
         checkAmount(data){
             this.amount_id = data.id;
             this.amount = data.amount;
+            this.disabled_button = false;
         },
         /** 确认充值 */
         confirmSubmit(){
-            Pay({amount: this.amount, type: "gilding"}).then(response => {
+            /**
+             * 1、只存在输入金额时，取输入金额
+             * 2、只存在选项金额时，取选项金额
+             * 3、如果两种都存在时，取选项金额
+             */
+            let amount = this.amount_number || this.amount;
+            if(this.amount_number && this.amount) { amount = this.amount; }
+            Pay({amount: amount, type: this.pay_type}).then(response => {
                 const order_no = response.data.order_no;
+                const payUrl = response.data.pay_url;
+                // if(payUrl) {
+                //     window.location.href = payUrl;
+                //     return false;
+                // }
                 //
 
                 localStorage.setItem("order_no", order_no);
@@ -109,15 +92,16 @@ export default {
                     path: "/payStatus"
                 })
             })
+        },
+        inputEnter(){
+            const reg = /^[0-9]*$/;
+            const status = reg.test(this.amount_number);
+            this.disabled_button = !status;
         }
 
         // 开发支付功能，支付成功后需要有一个回调地址，返回项目
         // 进行支付的过程，已经离开了项目本身，处于在微信端。支付完成或者放弃支付的时候，都会回调一个地址
         // 订单号丢失状态。
-=======
-            img: require("@/assets/images/level-img.png")
-        }
->>>>>>> html-static
     }
 }
 </script>
