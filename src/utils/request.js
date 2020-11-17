@@ -1,8 +1,11 @@
 import axios from "axios";
 // cookies
 import { getToken, getUsername } from "./cookies";
+import { getTokenCars } from "./cookiesCars";
 // ElementUI 单独引入
 import { Message } from 'element-ui';
+// sha1
+import sha1 from "js-sha1";
 // 创建实例
 const service = axios.create({
     baseURL: "",    // 请求地址  /apiLogin/getCode/
@@ -14,6 +17,7 @@ const service = axios.create({
 service.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     config.headers['Token'] = getToken();  // 携带token
+    config.headers['Tokencars'] = getTokenCars();  // 携带会员的token
     config.headers['Username'] = getUsername();  // 携带token
     return config;
 }, function (error) {

@@ -3,13 +3,30 @@
 @import "./ui.scss";
 @import "./icon.scss";
 
+@font-face {
+    font-family: "bahnschrift";
+    src: url("~@/assets/bahnschrift.ttf");
+}
+
+
+/* blank */
+.blank-40 { height: 40px; }
+.blank-20 { height: 20px; }
+.blank-100 { height: 100px; }
+
 /* color */
 .color-main { color: $color-main; }
+.color-white { color: white; }
+.color-success { color: #09bd00; }
+.color-fail { color: #bd1b00; }
 
 /* text-algin */
 .text-center { text-align: center; }
 .text-left { text-align: left; }
 .text-right { text-align: right; }
+
+/* line-height */
+.lh-40 { line-height: 40px;}
 
 /* float */
 .pull-right { float: right; }
@@ -17,14 +34,25 @@
 
 /* font-size */
 .fs-24 { font-size: 24px; }
+.fs-12 { font-size: 12px; }
+.fs-18 { font-size: 18px; }
+.fa-b { font-family: "bahnschrift"; }
 
 /* position */
 .p-r { position: relative; }
 .p-a { position: absolute; }
 
+/* margin */
+.mr-15 { margin-right: 15px; }
+
 /* clearfix */
 .clearfix { @extend %clearfix; }
 
+/* opacity */
+.opacity-4 { opacity: .4; }  // 0~1 
+
+/* flex */
+.flex-1 { flex: 1; }
 
 /* common ui */
 .select-car-btn {
@@ -41,7 +69,7 @@
     background-color: $color-main;
 }
 
-.user-container { padding: 0 30px; }
+.user-container { padding: 0 30px; overflow-y: auto; height: 100%; }
 
 /* user router-link */
 .group-links {
@@ -75,4 +103,10 @@
         @include webkit(transform, rotate(45deg));
         opacity: .1;
     }
+}
+
+.button-block {
+    width: 100%;
+    display: block;
+    text-align: center;
 }
