@@ -12,6 +12,14 @@
         </div>
         <!-- login -->
         <LoginVue />
+        <div class="cars_activation" v-if="order_no">
+            <router-link :to="{path: '/orderDetailed', query: {order_no: order_no} }" class="color-white">正在使用的车辆</router-link>
+        </div>
+        <div class="button-groure">
+            <el-button type="primary" size="small">取车</el-button>
+            <el-button type="primary" size="small">还车</el-button>
+            <el-button type="primary" size="small">取消</el-button>
+        </div>
     </div>
 </template>
 <script>
@@ -20,13 +28,14 @@ import Cars from "../cars";
 import Navbar from "@c/navbar";
 import LoginVue from "./login";
 import { Parking } from "@/api/parking";
-
+import { GetCarsActivation } from "@/api/order";
 export default {
     name: "Index",
     components: { Map, Cars, Navbar, LoginVue },
     data(){
         return {
-            parking: []
+            parking: [],
+            order_no: localStorage.getItem("carsActivationOrderNo")
         }
     },
     computed: {
@@ -34,6 +43,9 @@ export default {
             const rotuer = this.$route;
             return rotuer.name === "Index" ? false : true;
         }
+    },
+    beforeMount(){
+        !this.order_no && this.getCarsActivation();
     },
     methods: {
         callbackComponent(params) {
@@ -78,6 +90,22 @@ export default {
             const data = e.target.getExtData();
             // 父组件调子组件的方法
             this.$refs.cars && this.$refs.cars.getCarsList(data.id)
+        },
+        /** 获取正在使用的车辆 */
+        /**
+         * 简单的接口优化
+         * 1、查找缓存里面的 order_no，
+         * 2、没有情况就请求接口，
+         * 3、如果有就不请求
+         */
+        getCarsActivation(){
+            GetCarsActivation().then(response => {
+                const data = response.data;
+                if(data) {
+                    this.order_no = data.order_no;
+                    localStorage.setItem("carsActivationOrderNo", this.order_no);
+                }
+            })
         }
     },
     watch: {}
@@ -97,5 +125,20 @@ export default {
     &.open {
         right: 0;
     }
+}
+.cars_activation {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: green;
+    color: #fff;
+}
+.button-groure {
+    position: fixed;
+    left: 20px;
+    top: 60px;
 }
 </style>

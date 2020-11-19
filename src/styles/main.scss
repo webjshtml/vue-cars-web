@@ -17,8 +17,11 @@
 /* color */
 .color-main { color: $color-main; }
 .color-white { color: white; }
-.color-success { color: #09bd00; }
+.color-success, .color-OVER { color: #10da06; }
 .color-fail { color: #bd1b00; }
+.color-WAIT { color: $color-wait; }
+
+.color-CANCEL { color: #8c8c8c; }
 
 /* text-algin */
 .text-center { text-align: center; }

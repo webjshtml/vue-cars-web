@@ -9,74 +9,19 @@
             <li>已完成</li>
         </ul>
         <div class="order-list">
-            <div class="item" @click="detailed">
+            <div class="item" v-for="item in orderListData" :key="item.id" @click="detailed">
                 <div class="info">
-                    <time class="flex-1">2020-11-11 12:00:00</time>
+                    <time class="flex-1">{{ item.create_date }}</time>
                     <div class="flex-1">
-                        <span class="status color-wait">待取车</span>
+                        <!-- <span class="status" :style="{ color: casrStatus[item.order_status] ? casrStatus[item.order_status].color : '' }">
+                            {{ casrStatus[item.order_status] ? casrStatus[item.order_status].zh : "" }}
+                        </span> -->
+                        <span class="status" :class="'color-' + item.order_status">
+                            {{ casrStatus[item.order_status] ? casrStatus[item.order_status].zh : "" }}
+                        </span>
                     </div>
                 </div>
-                <p class="number">粤 B8X4B6</p>
-                <div>
-                    <div class="price pr arrow">
-                        <em>￥</em>
-                        <span>2000.00</span>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="info">
-                    <time class="flex-1">2020-11-11 12:00:00</time>
-                    <div class="flex-1">
-                        <span class="status color-wait">待取车</span>
-                    </div>
-                </div>
-                <p class="number">粤 B8X4B6</p>
-                <div>
-                    <div class="price pr arrow">
-                        <em>￥</em>
-                        <span>2000.00</span>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="info">
-                    <time class="flex-1">2020-11-11 12:00:00</time>
-                    <div class="flex-1">
-                        <span class="status color-wait">待取车</span>
-                    </div>
-                </div>
-                <p class="number">粤 B8X4B6</p>
-                <div>
-                    <div class="price pr arrow">
-                        <em>￥</em>
-                        <span>2000.00</span>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="info">
-                    <time class="flex-1">2020-11-11 12:00:00</time>
-                    <div class="flex-1">
-                        <span class="status color-wait">待取车</span>
-                    </div>
-                </div>
-                <p class="number">粤 B8X4B6</p>
-                <div>
-                    <div class="price pr arrow">
-                        <em>￥</em>
-                        <span>2000.00</span>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="info">
-                    <time class="flex-1">2020-11-11 12:00:00</time>
-                    <div class="flex-1">
-                        <span class="status color-wait">待取车</span>
-                    </div>
-                </div>
-                <p class="number">粤 B8X4B6</p>
+                <p class="number">{{ item.carsNumber }}</p>
                 <div>
                     <div class="price pr arrow">
                         <em>￥</em>
@@ -88,15 +33,31 @@
     </div>
 </template>
 <script>
+import { OrderList } from "@/api/order";
 export default {
     name: "User",
     components: {},
     data(){
         return {
-            img: require("@/assets/images/level-img.png")
+            img: require("@/assets/images/level-img.png"),
+            orderListData: [],
+            pageNumber: 1,
+            pageSize: 10,
+            // 车辆状态
+            casrStatus: this.$store.state.config.cars_status
         }
     },
+    beforeMount(){
+        this.getOrderList();
+    },
     methods: {
+        /** 获取租车订单列表 */
+        getOrderList(){
+            OrderList({pageNumber: this.pageNumber, pageSize: this.pageSize}).then(response => {
+                const data = response.data;
+                this.orderListData = data.data;
+            })
+        },
         detailed(){
             this.$router.push({
                 name: "OrderDetailed"
