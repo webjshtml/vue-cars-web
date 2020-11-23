@@ -28,3 +28,30 @@ export function GetCarsActivation(data = {}){
         data
     })
 }
+
+/** 取车 */
+export function CarsGet(data = {}){
+    return service.request({
+        method: "post",
+        url: `${process.env.VUE_APP_API_WEB}/carsGet/`,
+        data
+    })
+}
+
+/** 还车 */
+export function CarsReturn(data = {}){
+    return service.request({
+        method: "post",
+        url: `${process.env.VUE_APP_API_WEB}/carsReturn/`,
+        data
+    })
+}
+
+/** 取消 */
+export function CarsCancel(data = {}){
+    return service.request({
+        method: "post",
+        url: `${process.env.VUE_APP_API_WEB}/carsCancel/`,
+        data
+    })
+}
