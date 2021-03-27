@@ -11,7 +11,7 @@
         <div class="order-list">
             <div class="item" v-for="item in orderListData" :key="item.id" @click="detailed">
                 <div class="info">
-                    <time class="flex-1">{{ item.create_date }}</time>
+                    <time class="flex-1">{{ item.create_date | date("all", '.') }}</time>
                     <div class="flex-1">
                         <!-- <span class="status" :style="{ color: casrStatus[item.order_status] ? casrStatus[item.order_status].color : '' }">
                             {{ casrStatus[item.order_status] ? casrStatus[item.order_status].zh : "" }}
@@ -34,36 +34,23 @@
 </template>
 <script>
 import { OrderList } from "@/api/order";
+import { fotmarDate } from "@/utils/common";
 export default {
     name: "User",
     components: {},
     data(){
         return {
+            // 引入图片
             img: require("@/assets/images/level-img.png"),
-            orderListData: [],
-            pageNumber: 1,
-            pageSize: 10,
+            // 订单列表
+            order_list_data: [],
+            // 页码
+            page_number: 1,
             // 车辆状态
-            casrStatus: this.$store.state.config.cars_status
+            casr_status: this.$store.state.config.cars_status
         }
     },
-    beforeMount(){
-        this.getOrderList();
-    },
-    methods: {
-        /** 获取租车订单列表 */
-        getOrderList(){
-            OrderList({pageNumber: this.pageNumber, pageSize: this.pageSize}).then(response => {
-                const data = response.data;
-                this.orderListData = data.data;
-            })
-        },
-        detailed(){
-            this.$router.push({
-                name: "OrderDetailed"
-            })
-        }
-    }
+    methods: {}
 }
 </script>
 <style lang="scss">

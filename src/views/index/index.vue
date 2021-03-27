@@ -16,8 +16,13 @@
             <router-link :to="{path: '/orderDetailed', query: {order_no: cars_active_data.order_no} }" class="color-white">正在使用的车辆</router-link>
         </div>
         <div class="button-groure" v-if="cars_active_data && cars_active_data.order_no">
+            <div v-if="cars_active_data.order_status == 'RETURN'">
+                停车场的ID：
+                <el-button size="mini" v-for="item in parkingIdItem" :key="item" @click="parking_id = item" :type="parking_id == item ? 'primary' : ''">{{ item }}</el-button>
+            </div>
             <el-button type="primary" size="small" @click="carsGet" v-if="cars_active_data.order_status == 'WAIT'">取车</el-button>
-            <el-button type="primary" size="small" @click="carsReturn" v-if="cars_active_data.order_status == 'RETURN'">还车</el-button>
+            <!-- <el-button type="primary" size="small" @click="carsReturn" v-if="cars_active_data.order_status == 'RETURN'">还车</el-button> -->
+            <el-button type="primary" size="small" @click="carsReturns" v-if="cars_active_data.order_status == 'RETURN'">还车</el-button>
             <el-button type="primary" size="small" @click="carsCancel" v-if="cars_active_data.order_status == 'WAIT'">取消</el-button>
         </div>
     </div>
@@ -28,20 +33,24 @@ import Cars from "../cars";
 import Navbar from "@c/navbar";
 import LoginVue from "./login";
 import { Parking } from "@/api/parking";
-import { GetCarsActivation, CarsGet, CarsReturn, CarsCancel } from "@/api/order";
+import { GetCarsActivation, CarsGet, CarsReturn, CarsCancel, CarsReturns } from "@/api/order";
 export default {
     name: "Index",
     components: { Map, Cars, Navbar, LoginVue },
     data(){
         return {
             parking: [],
-            cars_active_data: JSON.parse(localStorage.getItem("cars_active"))
+            cars_active_data: JSON.parse(localStorage.getItem("cars_active")),
+            parking_id: ""
         }
     },
     computed: {
         show(){
             const rotuer = this.$route;
             return rotuer.name === "Index" ? false : true;
+        },
+        parkingIdItem(){
+            return this.$store.state.location.parking_id;
         }
     },
     beforeMount(){
@@ -74,7 +83,10 @@ export default {
                         }
                     }
                 });
-                this.parking = data
+                this.parking = data;
+                // 获取停车的ID
+                const parkingId = data.map(item => item.id);
+                this.$store.commit("location/SET_PARKING_ID", parkingId);
             })
         },
         walking(e){
@@ -120,6 +132,22 @@ export default {
         /** 取车 */
         carsReturn(){
             CarsReturn({order_no: this.cars_active_data.order_no, cars_id: this.cars_active_data.cars_id}).then(response => {
+                this.$message({
+                    message: response.message,
+                    type: "success"
+                })
+                this.cars_active_data = null;
+                localStorage.removeItem("cars_active");
+            })
+        },
+
+        /** 取车 */
+        carsReturns(){
+            CarsReturns({
+                order_no: this.cars_active_data.order_no, 
+                cars_id: this.cars_active_data.cars_id,
+                parking_id: this.parking_id
+            }).then(response => {
                 this.$message({
                     message: response.message,
                     type: "success"

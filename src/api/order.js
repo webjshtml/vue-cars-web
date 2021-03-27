@@ -47,6 +47,15 @@ export function CarsReturn(data = {}){
     })
 }
 
+/** 还车 */
+export function CarsReturns(data = {}){
+    return service.request({
+        method: "post",
+        url: `${process.env.VUE_APP_API_WEB}/carsReturnS/`,
+        data
+    })
+}
+
 /** 取消 */
 export function CarsCancel(data = {}){
     return service.request({
