@@ -13,7 +13,7 @@
     "element-ui": "^2.13.2",
     "js-cookie": "^2.2.1",
     "js-sha1": "^0.6.0",
-    "swiper": "^5.4.3",
+    "swiper": "^6.5.1",
     "vue": "^2.6.11",
     "vue-amap": "^0.5.10",
     "vue-awesome-swiper": "^4.1.1",
