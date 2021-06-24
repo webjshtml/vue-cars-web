@@ -2,14 +2,16 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+// 全局路由守卫
+import "./router/per";
 // 高德地图
 import "./plugin/aMap";
 // 全局组件
 import "./components/back";
 // ElementUI
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
+// Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
 
