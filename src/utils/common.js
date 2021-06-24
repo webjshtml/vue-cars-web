@@ -1,4 +1,30 @@
 import store from "@/store";
+/** 日期时间格式化 */
+export function fotmarDate(params){ // formatDate
+    // 为空
+    if(!params.value) { return ""; }
+    // 分割时间
+    const dateSplit = params.value.split(" ");
+    // 日期
+    let dateValue = dateSplit[0];
+    // 时间
+    let timeValue = dateSplit[1];
+    // 连接符(日期)
+    if(params.conn) { dateValue = dateValue.split("-").join(params.conn); }
+    // const date = new Date(params.value);
+    // const year = date.getFullYear();      // 年
+    // const month = date.getMonth();    // 月
+    // let day = date.getDate();           // 日
+    // const hours = date.getHours();    // 时
+    // const min = date.getMinutes();    // 分钟
+    // let sec = date.getSeconds();    // 秒
+    // day = day < 10 ? ('0' + day) : day;
+    // sec = sec < 10 ? '0' + sec : sec;
+    // 数据返回
+    if(params.type === "date") { return `${dateValue}`; }
+    if(params.type === "time") { return `${timeValue}`; }
+    if(params.type === "all") { return `${dateValue} ${timeValue}`; }
+}
 /** 省市区街道 */
 export function address(value){
     let address = value;
